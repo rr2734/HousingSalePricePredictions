@@ -36,6 +36,8 @@ with open('randomforestmodel.pkl', 'rb') as f:
     randomforestmodel = joblib.load(f)
 with open('xgb_model.pkl', 'rb') as f:
     xgb_model = joblib.load(f)
+with open('multilinear_regression_model_nolog.pkl', 'rb') as f:
+    model_sk_nolog = joblib.load(f)
 
 
 train_data = pd.read_csv('https://raw.githubusercontent.com/rr2734/rashmir/refs/heads/main/train.csv')  # path to your original training file
@@ -197,10 +199,12 @@ if uploaded_file is not None:
         #Adaboost Regressor
         adaboost = adaboost_regressor.predict(test_final)
         gradientboostingmodel = gradientboostingmodel.predict(test_final)
+        linearregnolog = model_sk_nolog.predict(test_final)
         
         # --- Show results ---
         results_df = test_final.copy()
         results_df['Id'] = id_col
+        results_df['Linear_Regression_nolog_Pred']=linearregnolog
         results_df['Linear_Regression_Pred'] = linear_preds
         results_df['Decision_Tree_Pred'] = tree_preds
         results_df['Random_Forest_Regressor_Pred'] = randomforestpred
@@ -225,6 +229,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
