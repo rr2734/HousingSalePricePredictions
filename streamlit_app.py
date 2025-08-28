@@ -137,7 +137,7 @@ if uploaded_file is not None:
                                         'BsmtFinSF1', 'LotFrontage', 'OverallQual', 
                                         'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', 
                                         '1stFlrSF', 'GrLivArea', 'FullBath', 
-                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','Age', 'SalePrice']
+                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','Age']
         missing_numeric = [col for col in numeric_cols if col not in df.columns]
        
 
@@ -220,6 +220,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
