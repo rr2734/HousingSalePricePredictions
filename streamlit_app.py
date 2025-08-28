@@ -168,7 +168,7 @@ if uploaded_file is not None:
                 test_final[col] = 0
 
         test_final= test_final[train_features]
-        test_final['Age'] = test_final['YrSold']-test_final['YearBuilt']
+        
        
 
 
@@ -220,6 +220,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
