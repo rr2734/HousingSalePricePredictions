@@ -76,21 +76,25 @@ numeric_cols=['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
 numeric_cols.remove('SalePrice')
 
-st.subheader("Input a single house manually")
+st.subheader("Option 1: Input a single house manually")
 user_input = {}
 with st.form("manual_input_form"):
-    for col, (min_val, max_val) in numeric_ranges.items():
-        user_input[col] = st.number_input(f"{col} ({min_val} to {max_val})", 
-                                          min_value=float(min_val), max_value=float(max_val), value=float(min_val))
+    for col in numeric_cols:
+        min_val = float(train_data[col].min())
+        max_val = float(train_data[col].max())
+        default_val = float(train_data[col].median())
+        user_input[col] = st.number_input(
+            f"{col} ({min_val} to {max_val})",
+            min_value=min_val,
+            max_value=max_val,
+            value=default_val,
+            step=1.0  # allows editing by typing
+        )
     submitted = st.form_submit_button("Predict for single input")
     
     if submitted:
-        # Convert input to DataFrame
         input_df = pd.DataFrame([user_input])
-        # Scale numeric features
         scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
-        
-        # Make predictions
         preds = {
             "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input))-1, 0),
             "Decision Tree": tree_model.predict(scaled_input),
@@ -196,6 +200,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
