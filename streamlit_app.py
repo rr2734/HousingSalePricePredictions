@@ -76,38 +76,33 @@ numeric_cols=['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
 numeric_cols.remove('SalePrice')
 
-st.subheader("Option 1: Input a single house manually")
+st.subheader("Input a single house manually")
 user_input = {}
 with st.form("manual_input_form"):
     for col in numeric_cols:
-        min_val = float(train_data[col].min())
-        max_val = float(train_data[col].max())
-        default_val = float(train_data[col].median())
-        user_input[col] = st.number_input(
-            f"{col} ({min_val} to {max_val})",
-            min_value=min_val,
-            max_value=max_val,
-            value=default_val,
-            step=None  # allow typing any number freely
-        )
+        user_input[col] = st.text_input(f"{col} (type a number)", value="")  # starts empty
     submitted = st.form_submit_button("Predict for single input")
-    
-    if submitted:
-        input_df = pd.DataFrame([user_input])
-        scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
-        preds = {
-            "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input))-1, 0),
-            "Decision Tree": tree_model.predict(scaled_input),
-            "Random Forest": randomforestmodel.predict(scaled_input),
-            "XGBoost": xgb_model.predict(scaled_input),
-            "Gaussian Naive Bayes": gnb.predict(scaled_input),
-            "Bagging": bagging_model.predict(scaled_input),
-            "Adaboost": adaboost_regressor.predict(scaled_input),
-            "Gradient Boosting": gradientboostingmodel.predict(scaled_input)
-        }
-        st.write("### Predictions for your input:")
-        st.json({k: float(v[0]) for k,v in preds.items()})
 
+    if submitted:
+        try:
+            # convert all inputs to float
+            input_df = pd.DataFrame({k: [float(v)] for k, v in user_input.items()})
+            scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
+            
+            preds = {
+                "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input))-1, 0),
+                "Decision Tree": tree_model.predict(scaled_input),
+                "Random Forest": randomforestmodel.predict(scaled_input),
+                "XGBoost": xgb_model.predict(scaled_input),
+                "Gaussian Naive Bayes": gnb.predict(scaled_input),
+                "Bagging": bagging_model.predict(scaled_input),
+                "Adaboost": adaboost_regressor.predict(scaled_input),
+                "Gradient Boosting": gradientboostingmodel.predict(scaled_input)
+            }
+            st.write("### Predictions for your input:")
+            st.json({k: float(v[0]) for k, v in preds.items()})
+        except ValueError:
+            st.error("Please enter valid numbers in all fields.")
 
 
 uploaded_file = st.file_uploader("Upload Excel file", type=["xlsx"])
@@ -200,6 +195,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
