@@ -46,7 +46,7 @@ numeric_cols1 = ['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'BsmtFinSF1', 'LotFrontage', 'OverallQual', 
                                         'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', 
                                         '1stFlrSF', 'GrLivArea', 'FullBath', 
-                                        'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
+                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','Age', 'SalePrice']
 
 numeric_cols1.remove('SalePrice')
 
@@ -73,7 +73,7 @@ numeric_cols=['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'BsmtFinSF1', 'LotFrontage', 'OverallQual', 
                                         'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', 
                                         '1stFlrSF', 'GrLivArea', 'FullBath', 
-                                        'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
+                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','Age', 'SalePrice']
 numeric_cols.remove('SalePrice')
 
 st.subheader("Input a single house manually")
@@ -211,6 +211,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
