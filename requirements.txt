@@ -1,14 +1,13 @@
-streamlit
-numpy
-pandas
-scikit-learn
-joblib
+openpyxl
 matplotlib
 seaborn
+numpy
+pandas
 statsmodels
-xgboost
-openpyxl
+scikit-learn
+streamlit
 xlsxwriter
+
 
 
 
