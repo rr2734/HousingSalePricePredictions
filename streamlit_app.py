@@ -151,7 +151,12 @@ if uploaded_file is not None:
         
 
         id_col = df['Id']
-        numeric_cols = [col for col in df.select_dtypes(include=['int64', 'float64']).columns if col not in ['SalePrice', 'Id']]
+        numeric_cols = ['Fireplaces', 'GarageYrBlt','WoodDeckSF', 
+                                        'OpenPorchSF', '2ndFlrSF','MasVnrArea',
+                                        'BsmtFinSF1', 'LotFrontage', 'OverallQual', 
+                                        'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', 
+                                        '1stFlrSF', 'GrLivArea', 'FullBath', 
+                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','Age']
      
        
      
@@ -220,6 +225,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
