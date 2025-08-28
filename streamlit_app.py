@@ -81,7 +81,7 @@ user_input = {}
 with st.form("manual_input_form"):
     for col in numeric_cols:
         if col =='Age':
-            st.write(f"{col})
+            st.write(f"{col}")
             user_input[col] = st.text_input(f"Enter {col}", value="")  # start empty
         else:
             min_val = train_data[col].min()
@@ -215,6 +215,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
