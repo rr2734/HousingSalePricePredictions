@@ -143,8 +143,8 @@ if uploaded_file is not None:
         with open('train_features.json') as f:
             train_features = json.load(f)
 
-        id_col = test_data['Id']
-        numeric_cols = [col for col in test_data.select_dtypes(include=['int64', 'float64']).columns if col not in ['SalePrice', 'Id']]
+        id_col = df['Id']
+        numeric_cols = [col for col in df.select_dtypes(include=['int64', 'float64']).columns if col not in ['SalePrice', 'Id']]
      
        
      
@@ -213,6 +213,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
