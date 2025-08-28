@@ -207,7 +207,7 @@ if uploaded_file is not None:
         results_df['XGBoost_Regressor_Pred'] = xgbpredictions
         results_df['Bagging_Predictions']=baggingpred
         results_df['Adaboost_Regressor_Predictions'] = adaboost
-        result_df['Gradient_Boosting_Predictions']=gradientboostingmodel
+        results_df['Gradient_Boosting_Predictions']=gradientboostingmodel
 
         st.subheader("Predictions")
         st.dataframe(results_df)
@@ -225,6 +225,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
