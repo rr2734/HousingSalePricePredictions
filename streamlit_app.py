@@ -28,8 +28,8 @@ with open('adaboost_regressor.pkl', 'rb') as f:
     adaboost_regressor = joblib.load(f)
 with open('bagging_model.pkl', 'rb') as f:
     bagging_model = joblib.load(f)
-with open('gnb.pkl', 'rb') as f:
-    gnb = joblib.load(f)
+#with open('gnb.pkl', 'rb') as f:
+    #gnb = joblib.load(f)
 with open('gradientboostingmodel.pkl', 'rb') as f:
     gradientboostingmodel = joblib.load(f)
 with open('randomforestmodel.pkl', 'rb') as f:
@@ -112,7 +112,6 @@ with st.form("manual_input_form"):
                 "Decision Tree": tree_model.predict(scaled_input),
                 "Random Forest": randomforestmodel.predict(scaled_input),
                 "XGBoost": xgb_model.predict(scaled_input),
-                "Gaussian Naive Bayes": gnb.predict(scaled_input),
                 "Bagging": bagging_model.predict(scaled_input),
                 "Adaboost": adaboost_regressor.predict(scaled_input),
                 "Gradient Boosting": gradientboostingmodel.predict(scaled_input)
@@ -180,7 +179,6 @@ if uploaded_file is not None:
         #Xgboost regressor
         xgbpredictions = xgb_model.predict(test_final)
         #Gaussian Naive Bayes Model
-        gnbpredict = gnb.predict(test_final)
         #Bagging
         baggingpred = bagging_model.predict(test_final)
         #Adaboost Regressor
@@ -194,7 +192,6 @@ if uploaded_file is not None:
         results_df['Decision_Tree_Pred'] = tree_preds
         results_df['Random_Forest_Regressor_Pred'] = randomforestpred
         results_df['XGBoost_Regressor_Pred'] = xgbpredictions
-        results_df['Gaussian_Naive_Bayes_Model_Pred']=gnbpredict
         results_df['Bagging_Predictions']=baggingpred
         results_df['Adaboost_Regressor_Predictions'] = adaboost
         result_df['Gradient_Boosting_Predictions']=gradientboostingmodel
@@ -215,6 +212,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
