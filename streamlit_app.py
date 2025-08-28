@@ -122,7 +122,7 @@ with st.form("manual_input_form"):
                 st.json({k: float(v[0]) for k, v in preds.items()})
         except ValueError:
             st.error("Please enter valid numbers in all fields.")
-        uploaded_file = st.file_uploader("Upload Excel file", type=["xlsx"])
+uploaded_file = st.file_uploader("Upload Excel file", type=["xlsx"])
 
 if uploaded_file is not None:
     try:
@@ -212,6 +212,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
