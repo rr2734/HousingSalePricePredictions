@@ -80,12 +80,15 @@ st.subheader("Input a single house manually")
 user_input = {}
 with st.form("manual_input_form"):
     for col in numeric_cols:
-        user_input[col] = st.text_input(f"{col} (type a number)", value="")  # starts empty
+        min_val = train_data[col].min()
+        max_val = train_data[col].max()
+        st.write(f"{col} (range: {min_val} to {max_val})")  # show range above
+        user_input[col] = st.text_input(f"Enter {col}", value="")  # empty input
     submitted = st.form_submit_button("Predict for single input")
 
     if submitted:
         try:
-            # convert all inputs to float
+            # Convert inputs to float
             input_df = pd.DataFrame({k: [float(v)] for k, v in user_input.items()})
             scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
             
@@ -195,6 +198,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
