@@ -51,7 +51,7 @@ numeric_cols1 = ['Fireplaces', 'GarageYrBlt','WoodDeckSF',
 numeric_cols1.remove('SalePrice')
 
 # Compute ranges for numeric columns
-numeric_ranges = {col: (train_data[col].min(), train_data[col].max()) for col in numeric_cols1}
+numeric_ranges = {col: (train_data[col].min(), train_data[col].max()) for col in train_data}
 
 
 
@@ -211,6 +211,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
