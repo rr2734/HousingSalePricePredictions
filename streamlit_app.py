@@ -76,7 +76,33 @@ numeric_cols=['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
 numeric_cols.remove('SalePrice')
 
-
+st.subheader("Option 1: Input a single house manually")
+user_input = {}
+with st.form("manual_input_form"):
+    for col, (min_val, max_val) in numeric_ranges.items():
+        user_input[col] = st.number_input(f"{col} ({min_val} to {max_val})", 
+                                          min_value=float(min_val), max_value=float(max_val), value=float(min_val))
+    submitted = st.form_submit_button("Predict for single input")
+    
+    if submitted:
+        # Convert input to DataFrame
+        input_df = pd.DataFrame([user_input])
+        # Scale numeric features
+        scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
+        
+        # Make predictions
+        preds = {
+            "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input))-1, 0),
+            "Decision Tree": tree_model.predict(scaled_input),
+            "Random Forest": randomforestmodel.predict(scaled_input),
+            "XGBoost": xgb_model.predict(scaled_input),
+            "Gaussian Naive Bayes": gnb.predict(scaled_input),
+            "Bagging": bagging_model.predict(scaled_input),
+            "Adaboost": adaboost_regressor.predict(scaled_input),
+            "Gradient Boosting": gradientboostingmodel.predict(scaled_input)
+        }
+        st.write("### Predictions for your input:")
+        st.json({k: float(v[0]) for k,v in preds.items()})
 
 
 
@@ -170,6 +196,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
