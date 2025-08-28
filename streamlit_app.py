@@ -142,7 +142,7 @@ if uploaded_file is not None:
 
         with open('train_features.json') as f:
             train_features = json.load(f)
-       numeric_cols=['Id','Fireplaces', 'GarageYrBlt','WoodDeckSF', 
+        numeric_cols=['Id','Fireplaces', 'GarageYrBlt','WoodDeckSF', 
                                         'OpenPorchSF', '2ndFlrSF','MasVnrArea',
                                         'BsmtFinSF1', 'LotFrontage', 'OverallQual', 
                                         'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', 
@@ -219,6 +219,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
