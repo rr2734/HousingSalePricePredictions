@@ -155,7 +155,7 @@ if uploaded_file is not None:
      
        
      
-        numerical_features = test_encoded[numeric_cols]
+        numerical_features = df[numeric_cols]
         scaled_numerical_features = pd.DataFrame(scaler.fit_transform(numerical_features), 
                                          columns=numerical_features.columns, 
                                          index=numerical_features.index)
@@ -220,6 +220,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
