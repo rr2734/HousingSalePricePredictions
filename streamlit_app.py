@@ -76,52 +76,51 @@ numeric_cols=['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
 numeric_cols.remove('SalePrice')
 
-st.subheader("Option 1: Input a single house manually")
+st.subheader("Input a single house manually")
 user_input = {}
 with st.form("manual_input_form"):
     for col in numeric_cols:
         min_val = train_data[col].min()
         max_val = train_data[col].max()
         st.write(f"{col} (range: {min_val} to {max_val})")
-        user_input[col] = st.text_input(f"Enter {col}", value="")  # empty input
+        user_input[col] = st.text_input(f"Enter {col}", value="")  # start empty
 
     submitted = st.form_submit_button("Predict for single input")
 
     if submitted:
         try:
-            # Ensure all fields are filled
-            if any(v.strip() == "" for v in user_input.values()):
-                st.error("Please fill in all fields before submitting.")
-            else:
-                # Convert to float
-                input_df = pd.DataFrame({k: [float(v)] for k, v in user_input.items()})
+            # Convert each input to float, handling empty strings
+            input_data = {}
+            for col, val in user_input.items():
+                val = val.strip()
+                if val == "":
+                    raise ValueError(f"{col} is empty")
+                input_data[col] = float(val)
 
-                # Optional: check ranges
-                for col in numeric_cols:
-                    val = input_df[col].iloc[0]
-                    min_val = train_data[col].min()
-                    max_val = train_data[col].max()
-                    if not (min_val <= val <= max_val):
-                        st.warning(f"{col} value {val} is outside typical range ({min_val}-{max_val})")
+            input_df = pd.DataFrame([input_data])
 
-                # Scale input
-                scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
+            # Scale input
+            scaled_input = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns)
 
-                # Make predictions
-                preds = {
-                    "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input))-1, 0),
-                    "Decision Tree": tree_model.predict(scaled_input),
-                    "Random Forest": randomforestmodel.predict(scaled_input),
-                    "XGBoost": xgb_model.predict(scaled_input),
-                    "Gaussian Naive Bayes": gnb.predict(scaled_input),
-                    "Bagging": bagging_model.predict(scaled_input),
-                    "Adaboost": adaboost_regressor.predict(scaled_input),
-                    "Gradient Boosting": gradientboostingmodel.predict(scaled_input)
-                }
-                st.write("### Predictions for your input:")
-                st.json({k: float(v[0]) for k, v in preds.items()})
-        except ValueError:
-            st.error("Please enter valid numbers in all fields.")
+            # Make predictions
+            preds = {
+                "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input)) - 1, 0),
+                "Decision Tree": tree_model.predict(scaled_input),
+                "Random Forest": randomforestmodel.predict(scaled_input),
+                "XGBoost": xgb_model.predict(scaled_input),
+                "Gaussian Naive Bayes": gnb.predict(scaled_input),
+                "Bagging": bagging_model.predict(scaled_input),
+                "Adaboost": adaboost_regressor.predict(scaled_input),
+                "Gradient Boosting": gradientboostingmodel.predict(scaled_input)
+            }
+
+            st.write("### Predictions for your input:")
+            st.json({k: float(v[0]) for k, v in preds.items()})
+
+        except ValueError as ve:
+            st.error(f"Invalid input: {ve}")
+        except Exception as e:
+            st.error(f"Error processing input: {e}")
 uploaded_file = st.file_uploader("Upload Excel file", type=["xlsx"])
 
 if uploaded_file is not None:
@@ -212,6 +211,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
