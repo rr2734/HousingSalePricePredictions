@@ -46,12 +46,12 @@ numeric_cols1 = ['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'BsmtFinSF1', 'LotFrontage', 'OverallQual', 
                                         'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', 
                                         '1stFlrSF', 'GrLivArea', 'FullBath', 
-                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','Age', 'SalePrice']
+                                        'TotRmsAbvGrd', 'GarageCars','GarageArea','SalePrice']
 
 numeric_cols1.remove('SalePrice')
 
 # Compute ranges for numeric columns
-numeric_ranges = {col: (train_data[col].min(), train_data[col].max()) for col in train_data}
+numeric_ranges = {col: (train_data[col].min(), train_data[col].max()) for col in numeric_cols1}
 
 
 
@@ -80,10 +80,14 @@ st.subheader("Input a single house manually")
 user_input = {}
 with st.form("manual_input_form"):
     for col in numeric_cols:
-        min_val = train_data[col].min()
-        max_val = train_data[col].max()
-        st.write(f"{col} (range: {min_val} to {max_val})")
-        user_input[col] = st.text_input(f"Enter {col}", value="")  # start empty
+        if col =='Age':
+            st.write(f"{col})
+            user_input[col] = st.text_input(f"Enter {col}", value="")  # start empty
+        else:
+            min_val = train_data[col].min()
+            max_val = train_data[col].max()
+            st.write(f"{col} (range: {min_val} to {max_val})")
+            user_input[col] = st.text_input(f"Enter {col}", value="")  # start empty
 
     submitted = st.form_submit_button("Predict for single input")
 
@@ -211,6 +215,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
