@@ -1,14 +1,14 @@
-openpyxl
-matplotlib
-seaborn
-numpy
-pandas
-statsmodels
-scikit-learn
-streamlit
-xlsxwriter
-
-
+streamlit==1.29.0
+numpy==1.27.5
+pandas==2.1.1
+scikit-learn==1.2.2
+joblib==1.3.2
+matplotlib==3.8.0
+seaborn==0.12.2
+statsmodels==0.14.1
+xgboost==1.7.7
+openpyxl==3.1.3
+xlsxwriter==3.1.2
 
 
 
