@@ -110,7 +110,7 @@ with st.form("manual_input_form"):
 
             # Make predictions
             preds = {
-                "Linear Regression NoLog":np.maximum(model_sk_nolog.predict(scaled_input))
+                "Linear Regression NoLog": np.maximum(model_sk_nolog.predict(scaled_input)),
                 "Linear Regression": np.maximum(np.exp(model_sk.predict(scaled_input)) - 1, 0),
                 "Decision Tree": tree_model.predict(scaled_input),
                 "Random Forest": randomforestmodel.predict(scaled_input),
@@ -230,6 +230,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
