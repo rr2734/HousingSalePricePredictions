@@ -76,7 +76,7 @@ numeric_cols=['Fireplaces', 'GarageYrBlt','WoodDeckSF',
                                         'TotRmsAbvGrd', 'GarageCars','GarageArea', 'SalePrice']
 numeric_cols.remove('SalePrice')
 
-st.subheader("Input a single house manually")
+st.subheader("Option 1: Input a single house manually")
 user_input = {}
 with st.form("manual_input_form"):
     for col in numeric_cols:
@@ -88,7 +88,7 @@ with st.form("manual_input_form"):
             min_value=min_val,
             max_value=max_val,
             value=default_val,
-            step=1.0  # allows editing by typing
+            step=None  # allow typing any number freely
         )
     submitted = st.form_submit_button("Predict for single input")
     
@@ -200,6 +200,7 @@ if uploaded_file is not None:
     except Exception as e:
 
         st.error(f"Error reading file: {e}")
+
 
 
 
