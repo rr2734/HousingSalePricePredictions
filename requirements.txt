@@ -6,7 +6,9 @@ pandas
 statsmodels
 scikit-learn
 streamlit
+xgboost
 xlsxwriter
+
 
 
 
